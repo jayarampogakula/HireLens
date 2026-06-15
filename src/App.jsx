@@ -225,6 +225,9 @@ function App() {
       const data = await res.json();
       
       if (!res.ok) {
+        if (data.details) {
+          setErrors(data.details);
+        }
         throw new Error(data.error || 'Server error during screening.');
       }
 
@@ -573,6 +576,30 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
           </div>
           <div style={{ width: '100%', maxWidth: '300px', marginTop: '10px' }}>
             <div className="skeleton-row" style={{ height: '6px', borderRadius: '3px' }} />
+          </div>
+        </div>
+      )}
+
+      {/* Errors Section (if all evaluations failed) */}
+      {!isAnalyzing && errors && candidates.length === 0 && (
+        <div className="results-section" style={{ marginTop: '20px' }}>
+          <div className="panel-card" style={{ borderColor: 'var(--rose)' }}>
+            <div className="panel-title" style={{ color: 'var(--rose)' }}>
+              <AlertTriangle size={20} />
+              Evaluation Failed
+            </div>
+            <p className="meta-desc" style={{ color: 'var(--text-main)', fontSize: '0.9rem' }}>
+              None of the uploaded resumes could be successfully analyzed. Review the detailed error logs below:
+            </p>
+            <div style={{ marginTop: '10px', padding: '16px', background: 'rgba(220,38,38,0.02)', border: '1px solid rgba(220,38,38,0.15)', borderRadius: '8px' }}>
+              <ul style={{ paddingLeft: '20px', fontSize: '0.85rem', color: 'var(--text-sub)' }}>
+                {errors.map((err, idx) => (
+                  <li key={idx} style={{ marginBottom: '8px' }}>
+                    <strong style={{ color: 'var(--text-main)' }}>{err.fileName}</strong>: {err.error}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       )}
