@@ -552,6 +552,12 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
               </>
             )}
           </button>
+
+          {resumes.length > 2 && (
+            <p className="meta-desc" style={{ fontSize: '0.75rem', textAlign: 'center', color: 'var(--amber)', marginTop: '-10px' }}>
+              ⚠️ Vercel Free Plan execution timeout is 10s. If analyzing more than 2 candidates takes longer, try scanning in smaller batches or run locally.
+            </p>
+          )}
         </div>
       </div>
 

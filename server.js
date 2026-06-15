@@ -449,7 +449,12 @@ app.post('/api/analyze', upload, async (req, res) => {
   }
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
-});
+// Export app for serverless environments (like Vercel)
+export default app;
+
+// Start server locally if not in a serverless environment
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Backend server running on http://localhost:${PORT}`);
+  });
+}
