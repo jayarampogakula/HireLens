@@ -301,7 +301,7 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
       case 'OpenAI': return 'gpt-4o';
       case 'Azure OpenAI': return 'Custom Deployment';
       case 'Anthropic Claude': return 'claude-3-5-sonnet-20240620';
-      case 'Google Gemini': return 'gemini-1.5-pro';
+      case 'Google Gemini': return 'gemini-1.5-flash';
       case 'Groq': return 'llama3-70b-8192';
       case 'OpenRouter': return 'meta-llama/llama-3-70b-instruct';
       case 'Mistral': return 'mistral-large-latest';
