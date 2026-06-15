@@ -6,6 +6,8 @@ const cors = require('cors');
 const multer = require('multer');
 const pdf = require('pdf-parse');
 const mammoth = require('mammoth');
+const WordExtractor = require('word-extractor');
+const docExtractor = new WordExtractor();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -47,7 +49,18 @@ async function extractDocxText(buffer) {
   }
 }
 
-// Helper: Parse any supported file (PDF, DOCX, TXT)
+// Helper: Extract text from legacy Word document (.doc)
+async function extractDocText(buffer) {
+  try {
+    const doc = await docExtractor.extract(buffer);
+    return doc.getBody() || '';
+  } catch (error) {
+    console.error('Error parsing legacy Word doc:', error);
+    throw new Error('Failed to parse legacy Word (.doc) file. Ensure it is a valid binary Word document.');
+  }
+}
+
+// Helper: Parse any supported file (PDF, DOCX, DOC, TXT)
 async function parseFile(file) {
   if (!file) return '';
   const filename = file.originalname.toLowerCase();
@@ -56,10 +69,12 @@ async function parseFile(file) {
     return await extractPdfText(file.buffer);
   } else if (filename.endsWith('.docx') || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
     return await extractDocxText(file.buffer);
+  } else if (filename.endsWith('.doc') || file.mimetype === 'application/msword') {
+    return await extractDocText(file.buffer);
   } else if (filename.endsWith('.txt') || file.mimetype === 'text/plain') {
     return file.buffer.toString('utf8');
   } else {
-    throw new Error(`Unsupported file format for ${file.originalname}. Only PDF, DOCX, and TXT are supported.`);
+    throw new Error(`Unsupported file format for ${file.originalname}. Only PDF, DOCX, DOC, and TXT are supported.`);
   }
 }
 

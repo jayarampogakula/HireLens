@@ -86,12 +86,12 @@ function App() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       const ext = file.name.split('.').pop().toLowerCase();
-      if (['pdf', 'docx', 'txt'].includes(ext)) {
+      if (['pdf', 'docx', 'doc', 'txt'].includes(ext)) {
         setJdFile(file);
         setJdText(''); // Clear text when file is uploaded
         showToast(`Job description "${file.name}" added successfully.`);
       } else {
-        showToast('Invalid file format. Only PDF, DOCX, and TXT are supported.', 'error');
+        showToast('Invalid file format. Only PDF, DOCX, DOC, and TXT are supported.', 'error');
       }
     }
   };
@@ -143,7 +143,7 @@ function App() {
 
     filesList.forEach(file => {
       const ext = file.name.split('.').pop().toLowerCase();
-      if (['pdf', 'docx', 'txt'].includes(ext)) {
+      if (['pdf', 'docx', 'doc', 'txt'].includes(ext)) {
         validFiles.push(file);
       } else {
         rejectedCount++;
@@ -151,7 +151,7 @@ function App() {
     });
 
     if (rejectedCount > 0) {
-      showToast(`${rejectedCount} file(s) ignored. Only PDF, DOCX, and TXT formats are accepted.`, 'error');
+      showToast(`${rejectedCount} file(s) ignored. Only PDF, DOCX, DOC, and TXT formats are accepted.`, 'error');
     }
 
     setResumes(prev => {
@@ -382,13 +382,13 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
           >
             <Upload size={20} className="upload-icon" />
             <span className="meta-desc">
-              Or drag & drop / <strong>browse</strong> JD.pdf, .docx, .txt
+              Or drag & drop / <strong>browse</strong> JD.pdf, .docx, .doc, .txt
             </span>
             <input
               type="file"
               ref={jdFileInputRef}
               onChange={handleJdFileSelect}
-              accept=".pdf,.docx,.txt"
+              accept=".pdf,.docx,.doc,.txt"
               style={{ display: 'none' }}
             />
           </div>
@@ -506,14 +506,14 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
             <Upload size={48} className="upload-icon" />
             <div style={{ fontWeight: 600, fontSize: '1.05rem' }}>Drag & Drop resumes here</div>
             <p className="meta-desc" style={{ maxWidth: '300px', margin: '0 auto' }}>
-              Accepts PDF and Word (.docx) files. Upload up to <strong>5 resumes</strong> for parallel screening.
+              Accepts PDF and Word (.docx, .doc) files. Upload up to <strong>5 resumes</strong> for parallel screening.
             </p>
             <input
               type="file"
               ref={resumeFileInputRef}
               onChange={handleResumesSelect}
               multiple
-              accept=".pdf,.docx,.txt"
+              accept=".pdf,.docx,.doc,.txt"
               style={{ display: 'none' }}
             />
           </div>
