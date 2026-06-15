@@ -160,7 +160,7 @@ async function callLLM(provider, apiKey, systemPrompt, userPrompt, config = {}) 
     }
     
     case 'Google Gemini': {
-      const targetModel = model || 'gemini-1.5-flash';
+      const targetModel = model || 'gemini-3.5-flash';
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'POST',
