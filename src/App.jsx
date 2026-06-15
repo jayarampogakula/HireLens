@@ -795,7 +795,7 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
                   <h3 className="section-subtitle">
                     <User size={16} /> Executive Candidate Summary
                   </h3>
-                  <p className="meta-desc" style={{ fontSize: '0.9rem', lineHeight: '1.6', color: '#e5e7eb' }}>
+                  <p className="meta-desc" style={{ fontSize: '0.9rem', lineHeight: '1.6', color: 'var(--text-sub)' }}>
                     {candidates[selectedIdx].summary}
                   </p>
                 </div>
@@ -993,7 +993,7 @@ ${candidate.interview_questions.map((q, idx) => `${idx + 1}. ${q}`).join('\n')}
                       <div key={idx} className="question-card">
                         <div className="question-text-content">
                           <span className="question-number">{idx + 1}</span>
-                          <span style={{ color: '#e5e7eb' }}>{q}</span>
+                          <span style={{ color: 'var(--text-sub)' }}>{q}</span>
                         </div>
                         <button
                           className={`copy-icon-btn ${copiedQuestionIdx === idx ? 'copied' : ''}`}
